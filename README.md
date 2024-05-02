@@ -35,7 +35,7 @@ The second player uses:
 ## GamePlay:
 
 ### The known initial chess setup
-![Initial Setup](https://github.com/alhusseingamal/x86-Chess/blob/main/screenshots/initial%setup.jpeg)
+![Initial Setup](https://github.com/alhusseingamal/x86-Chess/blob/main/screenshots/initial%20setup.jpeg)
 
 ### Midgame with the pieces eliminated from each player, in addition to the game timer shown to the left.
 ![Initial Setup](https://github.com/alhusseingamal/x86-Chess/blob/main/screenshots/game.jpeg)
