@@ -1,0 +1,164 @@
+setplayer proc near
+cmp Who_Plays, 0D
+JNE Player2Plays
+
+Player1Plays:
+MoveArr1Arr2 potential_cells_rowp1, potential_cells_row
+MoveArr1Arr2 potential_cells_colp1, potential_cells_col
+MoveArr1Arr2 potential_cells_squareNumberp1, potential_cells_squareNumber
+mov al,number_of_potential_cellsp1
+mov number_of_potential_cells, al
+mov al, PieceInSelectionp1
+mov PieceInSelection, al
+mov al,selectedSquareColorp1
+mov selectedSquareColor, al
+mov al,selectedPieceSquarep1
+mov selectedPieceSquare, al
+mov al,SelectedPieceRowp1
+mov SelectedPieceRow, al
+mov al,SelectedPieceColp1
+mov selectedpiececol, al
+mov al,SelectedPieceCodep1
+mov selectedpiececode, al 
+mov al,DesRowp1
+mov DesRow, al
+mov al,DesColp1
+mov DesCol, al
+mov al,DesSquarep1
+mov DesSquare, al
+mov al,DesColorp1
+mov DesColor, al
+mov al,DesPieceCodep1
+mov DesPieceCode, al
+mov al, selected_frame_row1
+mov selected_frame_row, al
+mov al, selected_frame_col1
+mov selected_frame_col, al
+mov al, selected_frame_square1
+mov selected_frame_square, al
+mov al, selected_frame_color1
+mov selected_frame_color, al
+
+RET
+
+Player2Plays:
+MoveArr1Arr2 potential_cells_rowp2, potential_cells_row
+MoveArr1Arr2 potential_cells_colp2, potential_cells_col
+MoveArr1Arr2 potential_cells_squareNumberp2, potential_cells_squareNumber
+mov ah,number_of_potential_cellsp2
+mov number_of_potential_cells, ah
+mov ah, PieceInSelectionp2
+mov PieceInSelection, ah
+mov ah,selectedSquareColorp2
+mov selectedSquareColor, ah
+mov ah,selectedPieceSquarep2
+mov selectedPieceSquare, ah
+mov ah,SelectedPieceRowp2
+mov SelectedPieceRow, ah
+mov ah,SelectedPieceColp2
+mov selectedpiececol, ah
+mov ah,SelectedPieceCodep2
+mov selectedpiececode, ah
+mov ah,DesRowp2
+mov DesRow, ah
+mov ah,DesColp2
+mov DesCol, ah
+mov ah,DesSquarep2
+mov DesSquare, ah
+mov ah,DesColorp2
+mov DesColor, ah
+mov ah,DesPieceCodep2
+mov DesPieceCode, ah
+mov al, selected_frame_row2
+mov selected_frame_row, al
+mov al, selected_frame_col2
+mov selected_frame_col, al
+mov al, selected_frame_square2
+mov selected_frame_square, al
+mov al, selected_frame_color2
+mov selected_frame_color, al
+
+RET
+setplayer endp
+
+De_set_Player proc near
+cmp Who_Plays, 0D
+JNE Player2DePlays
+
+Player1DePlays:
+MoveArr1Arr2 potential_cells_row, potential_cells_rowp1
+MoveArr1Arr2 potential_cells_col, potential_cells_colp1
+MoveArr1Arr2 potential_cells_squareNumber, potential_cells_squareNumberp1
+mov al,number_of_potential_cells
+mov number_of_potential_cellsp1, al
+mov al, PieceInSelection
+mov PieceInSelectionp1, al
+mov al,selectedSquareColor
+mov selectedSquareColorp1, al
+mov al,selectedPieceSquare
+mov selectedPieceSquarep1, al
+mov al,SelectedPieceRow
+mov SelectedPieceRowp1, al
+mov al,SelectedPieceCol
+mov selectedpiececolp1, al
+mov al,SelectedPieceCode
+mov selectedpiececodep1, al 
+mov al,DesRow
+mov DesRowp1, al
+mov al,DesCol
+mov DesColp1, al
+mov al,DesSquare
+mov DesSquarep1, al
+mov al,DesColor ;; Retrieve all the needed data
+mov DesColorp1, al
+mov al,DesPieceCode
+mov DesPieceCodep1, al
+mov al, selected_frame_row
+mov selected_frame_row1, al
+mov al, selected_frame_col
+mov selected_frame_col1, al
+mov al, selected_frame_square
+mov selected_frame_square1, al
+mov al, selected_frame_color
+mov selected_frame_color1, al
+RET
+
+Player2DePlays: ; De select player 2
+MoveArr1Arr2 potential_cells_row, potential_cells_rowp2
+MoveArr1Arr2 potential_cells_col, potential_cells_colp2
+MoveArr1Arr2 potential_cells_squareNumber, potential_cells_squareNumberp2
+mov ah,number_of_potential_cells
+mov number_of_potential_cellsp2, ah
+mov ah, PieceInSelection
+mov PieceInSelectionp2, ah
+mov ah,selectedSquareColor
+mov selectedSquareColorp2, ah ; Retrieve all the needed data
+mov ah,selectedPieceSquare
+mov selectedPieceSquarep2, ah
+mov ah,SelectedPieceRow
+mov SelectedPieceRowp2, ah
+mov ah,SelectedPieceCol
+mov selectedpiececolp2, ah
+mov ah,SelectedPieceCode
+mov selectedpiececodep2, ah
+mov ah,DesRow
+mov DesRowp2, ah
+mov ah,DesCol
+mov DesColp2, ah
+mov ah,DesSquare
+mov DesSquarep2, ah
+mov ah,DesColor
+mov DesColorp2, ah
+mov ah,DesPieceCode
+mov DesPieceCodep2, ah
+mov al, selected_frame_row
+mov selected_frame_row2, al
+mov al, selected_frame_col
+mov selected_frame_col2, al
+mov al, selected_frame_square
+mov selected_frame_square2, al
+mov al, selected_frame_color
+mov selected_frame_color2, al
+
+RET
+De_set_Player endp

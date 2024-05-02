@@ -1,0 +1,283 @@
+KingInCheck proc Near
+    mov NextNotification, offset empty
+
+    ; LET A HOSAN IN THE POSITION OF THE KING AND GET ALL THE REACHABLE POSITIONS LIKE USUAL
+    ; CHECK IF ANY OF THOSE POSITIONS HAS A WHITE HOSAN IN IT, IF SO THEN KING IS IN CHECK
+    
+    BlackKing:
+    MOV AL, BKingPos
+    MOV SelectedPieceSquare, AL
+    MOV AL, bkingrow1
+    MOV SelectedPieceRow, AL
+    MOV AL, bkingcol1
+    MOV SelectedPieceCol, AL
+
+
+    LET_BKING_BE_KING:
+    MOV number_of_potential_cells, 0D 
+    MOV SelectedPieceCode, 5D 
+    call GetKingMoves
+    CMP number_of_potential_cells, 0d
+    JE LET_BKING_BE_HOSAN
+    MOV BX, 0d
+    MOV CL, number_of_potential_cells
+    LET_BKING_BE_KING_LABEL1: 
+    MOV CH, [potential_cells_squareNumber + BX] 
+    INC BX
+    PUSH BX
+    GetSquarePieceCode dummy1, CH
+    POP BX
+    CMP dummy1, 11d 
+    JE BlackkingISInCheck
+    DEC CL
+    JNZ LET_BKING_BE_KING_LABEL1
+
+
+    LET_BKING_BE_HOSAN:
+    MOV number_of_potential_cells, 0D ; reset number of potential cells in case it is not zero ; it probably is though
+    MOV SelectedPieceCode, 2D ; king is hosan
+    call GetHosanMoves
+    CMP number_of_potential_cells, 0d
+    JE LET_BKING_BE_TABIA
+    MOV BX, 0d
+    MOV CL, number_of_potential_cells
+    LET_BKING_BE_HOSAN_LABEL1: ; loop
+    MOV CH, [potential_cells_squareNumber + BX] ; get square number of all potential cells
+    INC BX
+    PUSH BX
+    GetSquarePieceCode dummy1, CH ; get square piece code of given square number in dummy2
+    POP BX
+    CMP dummy1, 8d ; if square piece code equals the square piece code of WHITE HOSAN, THAT means that a white hosan checks the black king
+    JE BlackkingISInCheck
+    DEC CL
+    JNZ LET_BKING_BE_HOSAN_LABEL1
+    
+    LET_BKING_BE_TABIA:
+    MOV number_of_potential_cells, 0D
+    MOV SelectedPieceCode, 1D 
+    call GetTabyaMoves
+    CMP number_of_potential_cells, 0d
+    JE LET_BKING_BE_FEEL 
+    MOV BX, 0d
+    MOV CL, number_of_potential_cells
+    LET_BKING_BE_TABIA_LABEL1: 
+    MOV CH, [potential_cells_squareNumber + BX] 
+    INC BX
+    PUSH BX
+    GetSquarePieceCode dummy1, CH
+    POP BX
+    CMP dummy1, 7d 
+    JE BlackkingISInCheck
+    DEC CL
+    JNZ LET_BKING_BE_TABIA_LABEL1
+
+    LET_BKING_BE_FEEL:
+    MOV number_of_potential_cells, 0D
+    MOV SelectedPieceCode, 3D 
+    call GetFeelMoves 
+    CMP number_of_potential_cells, 0d
+    JE LET_BKING_BE_QUEEN
+    MOV BX, 0d
+    MOV CL, number_of_potential_cells
+    LET_BKING_BE_FEEL_LABEL1: 
+    MOV CH, [potential_cells_squareNumber + BX] 
+    INC BX
+    PUSH BX
+    GetSquarePieceCode dummy1, CH
+    POP BX
+    CMP dummy1, 9d 
+    JE BlackkingISInCheck
+    DEC CL
+    JNZ LET_BKING_BE_FEEL_LABEL1
+
+    LET_BKING_BE_QUEEN:
+    MOV number_of_potential_cells, 0D
+    MOV SelectedPieceCode, 4D 
+    call getQueenMoves
+    CMP number_of_potential_cells, 0d
+    JE LET_BKING_BE_GOND
+    MOV BX, 0d
+    MOV CL, number_of_potential_cells
+    LET_BKING_BE_QUEEN_LABEL1: 
+    MOV CH, [potential_cells_squareNumber + BX] 
+    INC BX
+    push BX
+    GetSquarePieceCode dummy1, CH
+    pop BX
+    CMP dummy1, 10d 
+    JE BlackkingISInCheck
+    DEC CL
+    JNZ LET_BKING_BE_QUEEN_LABEL1
+    JMP WhiteKing
+
+    LET_BKING_BE_GOND:
+    MOV number_of_potential_cells, 0D
+    MOV SelectedPieceCode, 6D 
+    call GetBgondMoves
+    CMP number_of_potential_cells, 0d
+    JE WhiteKing
+    MOV BX, 0d
+    MOV CL, number_of_potential_cells
+    LET_BKING_BE_GOND_LABEL1: 
+    MOV CH, [potential_cells_squareNumber + BX] 
+    INC BX
+    push BX
+    GetSquarePieceCode dummy1, CH
+    pop BX
+    CMP dummy1, 12d 
+    JE BlackkingISInCheck
+    DEC CL
+    JNZ LET_BKING_BE_GOND_LABEL1
+
+
+    
+    
+    BlackKingIsInCheck:
+    MOV number_of_potential_cells, 0D ; REMEMBER TO RESET TO ZERO
+    MOV BKingChecked, 1D
+    MOV NextNotification, offset BlackKingIsCheckedMessaage
+    call ShowNotifications
+   
+    ret
+    
+    WhiteKing:
+    MOV AL, WKingPos
+    MOV SelectedPieceSquare, AL
+    MOV AL, wkingrow1
+    MOV SelectedPieceRow, AL
+    MOV AL, wkingcol1
+    MOV SelectedPieceCol, AL
+
+
+    LET_WKING_BE_KING:
+    MOV number_of_potential_cells, 0D 
+    MOV SelectedPieceCode,11D 
+    call GetKingMoves
+    CMP number_of_potential_cells, 0d
+    JE LET_WKING_BE_HOSAN
+    MOV BX, 0d
+    MOV CL, number_of_potential_cells
+    LET_WKING_BE_KING_LABEL1: 
+    MOV CH, [potential_cells_squareNumber + BX] 
+    INC BX
+    PUSH BX
+    GetSquarePieceCode dummy1, CH 
+    POP BX
+    CMP dummy1, 5d 
+    JE WhitekingISInCheck
+    DEC CL
+    JNZ LET_WKING_BE_KING_LABEL1
+
+    LET_WKING_BE_HOSAN:
+    MOV number_of_potential_cells, 0D 
+    MOV SelectedPieceCode, 8D 
+    call GetHosanMoves
+    CMP number_of_potential_cells, 0d
+    JE LET_WKING_BE_TABIA
+    MOV BX, 0d
+    MOV CL, number_of_potential_cells
+    LET_WKING_BE_HOSAN_LABEL1:
+    MOV CH, [potential_cells_squareNumber + BX]
+    INC BX 
+    push BX
+    GetSquarePieceCode dummy1, CH 
+    pop BX
+    CMP dummy1, 2d 
+    JE WhitekingISInCheck
+    DEC CL
+    JNZ LET_WKING_BE_HOSAN_LABEL1
+    
+    LET_WKING_BE_TABIA:
+    MOV number_of_potential_cells, 0D
+    MOV SelectedPieceCode, 7D 
+    call GetTabyaMoves
+    CMP number_of_potential_cells, 0d
+    JE LET_WKING_BE_FEEL
+    MOV BX, 0d
+    MOV CL, number_of_potential_cells
+    LET_WKING_BE_TABIA_LABEL1: 
+    MOV CH, [potential_cells_squareNumber + BX]
+    INC BX
+    PUSH BX 
+    GetSquarePieceCode dummy1, CH
+    POP BX
+    CMP dummy1, 1d 
+    JE WhitekingISInCheck
+    DEC CL
+    JNZ LET_WKING_BE_TABIA_LABEL1
+
+    LET_WKING_BE_FEEL:
+    MOV number_of_potential_cells, 0D
+    MOV SelectedPieceCode, 9D 
+    call GetFeelMoves 
+    CMP number_of_potential_cells, 0d
+    JE LET_WKING_BE_QUEEN
+    MOV BX, 0d
+    MOV CL, number_of_potential_cells
+    LET_WKING_BE_FEEL_LABEL1: 
+    MOV CH, [potential_cells_squareNumber + BX] 
+    INC BX
+    push BX
+    GetSquarePieceCode dummy1, CH
+    POP BX
+    CMP dummy1, 3d
+    JE WhitekingISInCheck
+    DEC CL
+    JNZ LET_WKING_BE_FEEL_LABEL1
+
+    LET_WKING_BE_QUEEN:
+    MOV number_of_potential_cells, 0D
+    MOV SelectedPieceCode, 10d 
+    call SelectPieceMoves 
+    CMP number_of_potential_cells, 0d
+    JE KingInCheckRetempty
+    MOV BX, 0d
+    MOV CL, number_of_potential_cells
+    LET_WKING_BE_QUEEN_LABEL1: 
+    MOV CH, [potential_cells_squareNumber + BX] 
+    INC BX
+    PUSH BX
+    GetSquarePieceCode dummy1, CH
+    POP BX
+    CMP dummy1, 4d
+    JE WhitekingISInCheck
+    DEC CL
+    JNZ LET_WKING_BE_QUEEN_LABEL1
+    JMP KingInCheckRetempty
+
+    LET_WKING_BE_GOND:
+    MOV number_of_potential_cells, 0D
+    MOV SelectedPieceCode, 12D 
+    call GetWgondMoves  
+    CMP number_of_potential_cells, 0d
+    JE KingInCheckRet
+    MOV BX, 0d
+    MOV CL, number_of_potential_cells
+    LET_WKING_BE_GOND_LABEL1: 
+    MOV CH, [potential_cells_squareNumber + BX] 
+    INC BX
+    push BX
+    GetSquarePieceCode dummy1, CH
+    pop BX
+    CMP dummy1, 6d 
+    JE WhitekingISInCheck
+    DEC CL
+    JNZ LET_WKING_BE_GOND_LABEL1
+
+
+    WhiteKingIsInCheck:
+    MOV number_of_potential_cells, 0D ; REMEMBER TO RESET TO ZERO
+    MOV WKingChecked, 1D
+    MOV NextNotification, offset WhiteKingIsCheckedMessaage
+    call ShowNotifications
+    jmp KingInCheckRet
+    
+    
+    KingInCheckRetempty:
+    MOV NextNotification, offset Empty
+    call ShowNotifications
+    call ShowNotifications
+    RET
+    KingInCheckRet:
+    RET
+KingInCheck endp
