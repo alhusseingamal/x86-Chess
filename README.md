@@ -43,3 +43,5 @@ The second player uses:
 
 ## Contributors
 * AlHussein Gamal Hussein
+* Hassan Hatem Hassan
+* Nour-Eldin Ahmed Abdel-Wahab
