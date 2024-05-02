@@ -39,3 +39,10 @@ The second player uses:
 
 ### Midgame with the pieces eliminated from each player in addition to the game timer shown to the right of the game board.
 ![Initial Setup](https://github.com/alhusseingamal/x86-Chess/blob/main/screenshots/game.jpeg)
+
+
+## Contributors
+* AlHussein Gamal Hussein
+* Mohamed Gamal Hussein
+* Hassan Hatem Hassan
+* Nour-Eldin Ahmed Abdel-Wahab
